@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  app:
+    build: 
+      context: .
+      target: app
+      args:
+        PHP_VERSION_ARG: ${PHP_VERSION}
+    restart: unless-stopped
+    depends_on:
+      - db
+    env_file:
+      - .env
+    volumes:
+      - ./symfony:/var/www/app:rw
+
+  db:
+    image: mysql:5.7
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    env_file:
+      - .env
+    volumes:
+      - ./docker/db/log:/var/log/mysql:rw
+
+  web:
+    image: nginx:${NGINX_VERSION}
+    build:
+      context: .
+      target: web
+      args:
+        NGINX_VERSION_ARG: ${NGINX_VERSION}
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - app
+    volumes:
+      - ./docker/web/log:/var/log/nginx:rw
+      - ./docker/web/config/nginx.conf:/opt/nginx-confs/default.conf.dist:ro
+      - ./go/public:/var/www/public:rw
+
+
