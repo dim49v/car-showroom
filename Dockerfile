@@ -12,6 +12,7 @@ RUN docker-php-ext-install pdo pdo_mysql \
     && docker-php-ext-enable redis
 RUN wget https://get.symfony.com/cli/installer -O - | bash
 COPY ./symfony/ /var/www/app/
+COPY ./.env /var/www/app/.env
 WORKDIR /var/www/app/
 RUN set -ex \
     && composer install
