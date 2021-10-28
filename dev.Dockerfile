@@ -11,10 +11,8 @@ RUN docker-php-ext-install pdo pdo_mysql \
     && yes '' | pecl install redis \
     && docker-php-ext-enable redis
 RUN wget https://get.symfony.com/cli/installer -O - | bash
-WORKDIR /var/www/app/
-RUN set -ex \
-    && composer install --no-dev --no-scripts --no-suggest --no-interaction --prefer-dist --optimize-autoloader --ignore-platform-reqs
 COPY ./docker/php/dev.docker-command.sh /bin/docker-command.sh
+WORKDIR /var/www/app/
 RUN sed -i ':a;N;$!ba;s/\r//g' /bin/docker-command.sh \
     && chmod +x /bin/docker-command.sh
 CMD ["/bin/docker-command.sh"]

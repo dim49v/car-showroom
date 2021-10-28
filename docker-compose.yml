@@ -29,6 +29,7 @@ services:
     build:
       context: .
       target: web
+      dockerfile: Dockerfile
       args:
         NGINX_VERSION_ARG: ${NGINX_VERSION}
     restart: unless-stopped

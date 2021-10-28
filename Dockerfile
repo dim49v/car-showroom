@@ -27,6 +27,7 @@ CMD ["/bin/docker-command.sh"]
 
 FROM nginx:${NGINX_VERSION_ARG} AS web
 COPY ./docker/web/docker-command.sh /bin/docker-command.sh
+COPY --from=app /var/www/app/public/ /var/www/app/public/
 RUN apt-get update && apt-get install -y nginx-extras
 RUN sed -i ':a;N;$!ba;s/\r//g' /bin/docker-command.sh \
     && chmod +x /bin/docker-command.sh
