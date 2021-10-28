@@ -19,12 +19,6 @@ COPY ./docker/php/docker-command.sh /bin/docker-command.sh
 RUN sed -i ':a;N;$!ba;s/\r//g' /bin/docker-command.sh \
     && chmod +x /bin/docker-command.sh
 RUN usermod -u 1000 www-data
-RUN mkdir -p /var/www/.composer \
-    && chown -R www-data:www-data /var/www/.composer \
-    && mkdir -p /var/www/app/vendor \
-    && chown -R www-data:www-data /var/www/app/vendor \
-    && mkdir -p /var/www/app/var \
-    && chown -R www-data:www-data /var/www/app/var
 USER www-data
 WORKDIR /var/www/app
 CMD ["/bin/docker-command.sh"]
