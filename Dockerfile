@@ -7,12 +7,18 @@ RUN cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN apt-get update
 RUN apt-get install -y git zip unzip
+RUN docker-php-ext-install pdo pdo_mysql \
+    && yes '' | pecl install redis \
+    && docker-php-ext-enable redis
 RUN wget https://get.symfony.com/cli/installer -O - | bash
 COPY ./docker/php/docker-command.sh /bin/docker-command.sh
 RUN sed -i ':a;N;$!ba;s/\r//g' /bin/docker-command.sh \
     && chmod +x /bin/docker-command.sh
 RUN usermod -u 1000 www-data
+RUN mkdir -p /var/www/.composer \
+    && chown -R www-data:www-data /var/www/.composer
 USER www-data
+
 WORKDIR /var/www/app
 CMD ["/bin/docker-command.sh"]
 

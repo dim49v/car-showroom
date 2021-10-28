@@ -4,22 +4,65 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
-
+    api.version: '1.0'
+    api.prefix: "api/v%api.version%"
+    env(REDIS_HOST): 'cache'
+    env(REDIS_PORT): 6379
+    env(AUTH_TOKEN_LIFETIME): 7200
 services:
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
-    # makes classes in src/ available to be used as services
-    # this creates a service per class whose id is the fully-qualified class name
+    Redis:
+        class: Redis
+        calls:
+            - method: connect
+              arguments:
+                  - '%env(REDIS_HOST)%'
+                  - '%env(int:REDIS_PORT)%'
+
     App\:
         resource: '../src/'
         exclude:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
+            - '../src/Migrations/'
             - '../src/Kernel.php'
             - '../src/Tests/'
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    App\Controller\:
+        resource: '../src/Controller'
+        tags: ['controller.service_arguments']
+
+    app.logout.listener:
+        class: App\EventListener\LogoutListener
+        tags:
+            - name: 'kernel.event_listener'
+              event: 'Symfony\Component\Security\Http\Event\LogoutEvent'
+              dispatcher: security.event_dispatcher.main
+
+    App\Security\Authenticator:
+        arguments:
+            $tokenLifetime: '%env(int:AUTH_TOKEN_LIFETIME)%'
+
+    App\Security\TokenAuthenticator:
+        arguments:
+            $tokenLifetime: '%env(int:AUTH_TOKEN_LIFETIME)%'
+
+    app.redis.service:
+        class: App\Service\RedisService
+        public: true
+        arguments:
+            - '%env(REDIS_HOST)%'
+            - '%env(int:REDIS_PORT)%'
+
+    gedmo.listener.timestampable:
+        class: Gedmo\Timestampable\TimestampableListener
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+        calls:
+            - [ setAnnotationReader, [ '@annotation_reader' ] ]

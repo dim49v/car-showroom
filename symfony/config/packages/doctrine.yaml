@@ -1,10 +1,29 @@
+parameters:
+    env(MYSQL_HOST): 'localhost'
+    env(MYSQL_PORT): '3306'
+    env(MYSQL_DATABASE): ''
+    env(MYSQL_USER): ''
+    env(MYSQL_PASSWORD): ''
 doctrine:
     dbal:
-        url: '%env(resolve:DATABASE_URL)%'
-
-        # IMPORTANT: You MUST configure your server version,
-        # either here or in the DATABASE_URL env var (see .env file)
-        #server_version: '13'
+        default_connection: default
+        connections:
+            default:
+                driver: 'pdo_mysql'
+                server_version: '%env(MYSQL_VERSION)%'
+                charset: 'utf8mb4'
+                default_table_options:
+                    charset: 'utf8mb4'
+                    collate: 'utf8mb4_unicode_ci'
+                host: '%env(MYSQL_HOST)%'
+                port: '%env(string:MYSQL_PORT)%'
+                dbname: '%env(MYSQL_DATABASE)%'
+                user: '%env(MYSQL_USER)%'
+                password: '%env(MYSQL_PASSWORD)%'
+                wrapper_class: Facile\DoctrineMySQLComeBack\Doctrine\DBAL\Connection
+                driver_class: Facile\DoctrineMySQLComeBack\Doctrine\DBAL\Driver\PDOMySql\Driver
+                options:
+                    x_reconnect_attempts: 3
     orm:
         auto_generate_proxy_classes: true
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware

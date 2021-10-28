@@ -1,4 +1,7 @@
 {
+    "behat/transliterator": {
+        "version": "v1.3.0"
+    },
     "composer/package-versions-deprecated": {
         "version": "1.11.99.4"
     },
@@ -85,8 +88,14 @@
     "egulias/email-validator": {
         "version": "3.1.2"
     },
+    "facile-it/doctrine-mysql-come-back": {
+        "version": "1.10.1"
+    },
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.5"
+    },
+    "gedmo/doctrine-extensions": {
+        "version": "v3.2.0"
     },
     "laminas/laminas-code": {
         "version": "4.4.3"
