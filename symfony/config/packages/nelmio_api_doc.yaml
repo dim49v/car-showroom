@@ -1,10 +1,13 @@
+parameters:
+  env(SERVER_SCHEME): 'http'
+  env(SERVER_HOST): 'localhost'
 nelmio_api_doc:
   areas:
     path_patterns:
       - ^/api(?!/doc$)
   documentation:
     servers:
-      - url: 'http://localhost'
+      - url: '%env(SERVER_SCHEME)%://%env(SERVER_HOST)%'
         description: API over HTTPS
     info:
       title: car-showroom
