@@ -14,7 +14,7 @@ RUN wget https://get.symfony.com/cli/installer -O - | bash
 COPY ./symfony/* /var/www/app/
 WORKDIR /var/www/app/
 RUN set -ex \
-    && composer install --no-dev --no-scripts --no-suggest --no-interaction --prefer-dist --optimize-autoloader --ignore-platform-reqs
+    && composer install
 COPY ./docker/php/docker-command.sh /bin/docker-command.sh
 RUN sed -i ':a;N;$!ba;s/\r//g' /bin/docker-command.sh \
     && chmod +x /bin/docker-command.sh
