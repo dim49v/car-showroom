@@ -1,2 +1,0 @@
-2021/10/25 13:23:46 [error] 10#10: *1 open() "/usr/share/nginx/html/dfsgs" failed (2: No such file or directory), client: 172.19.0.1, server: , request: "GET /dfsgs HTTP/1.1", host: "localhost"
-2021/10/25 13:30:24 [error] 10#10: *4 open() "/usr/share/nginx/html/dfsgs" failed (2: No such file or directory), client: 172.19.0.1, server: , request: "GET /dfsgs HTTP/1.1", host: "localhost"
