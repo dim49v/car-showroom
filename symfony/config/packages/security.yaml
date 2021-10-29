@@ -28,7 +28,8 @@ security:
         ROLE_MANAGER: ROLE_GUEST
 
     access_control:
-        - { path: ^/%api.prefix%/users, roles: ROLE_DIRECTOR, methods: [POST, PUT, PATCH, DELETE]}
+        - { path: ^/%api.prefix%/users, roles: ROLE_DIRECTOR, methods: [DELETE]}
         - { path: ^/%api.prefix%/showrooms, roles: ROLE_DIRECTOR, methods: [POST, PUT, PATCH, DELETE]}
+        - { path: ^/%api.prefix%/car-brands, roles: ROLE_DIRECTOR, methods: [POST, PUT, PATCH, DELETE]}
         - { path: ^/%api.prefix%/users, roles: ROLE_MANAGER }
         - { path: ^/%api.prefix%/purchases, roles: ROLE_MANAGER }

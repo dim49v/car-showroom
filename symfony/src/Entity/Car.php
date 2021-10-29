@@ -6,6 +6,7 @@ use App\Entity\Traits\IdEntity;
 use App\Entity\Traits\SelectEntity;
 use App\Interfaces\IdInterface;
 use Doctrine\ORM\Mapping as ORM;
+use OpenApi\Annotations as OA;
 use Symfony\Component\Serializer\Annotation as Serializer;
 use function Symfony\Component\String\u;
 
@@ -39,10 +40,15 @@ class Car implements IdInterface
     /**
      * @ORM\OneToOne(targetEntity="Purchase", mappedBy="car")
      */
-    protected ?Purchase $purchase;
+    protected ?Purchase $purchase = null;
 
     /**
      * @Serializer\Groups({"full"})
+     * @OA\Property(
+     *     type="object",
+     *     @OA\Property(property="title", type="string"),
+     *     @OA\Property(property="value", type="integer"),
+     * )
      */
     public function getBrand(): CarBrand
     {
@@ -73,6 +79,11 @@ class Car implements IdInterface
 
     /**
      * @Serializer\Groups({"full"})
+     * @OA\Property(
+     *     type="object",
+     *     @OA\Property(property="title", type="string"),
+     *     @OA\Property(property="value", type="integer"),
+     * )
      */
     public function getShowroom(): Showroom
     {
@@ -99,7 +110,7 @@ class Car implements IdInterface
     }
 
     /**
-     * @Serializer\Groups({"full"})
+     * @Serializer\Groups({"full", "select"})
      */
     public function getTitle(): string
     {

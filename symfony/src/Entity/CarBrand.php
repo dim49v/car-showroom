@@ -8,6 +8,7 @@ use App\Interfaces\IdInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use OpenApi\Annotations as OA;
 use Symfony\Component\Serializer\Annotation as Serializer;
 
 /**
@@ -37,7 +38,7 @@ class CarBrand implements IdInterface
     }
 
     /**
-     * @Serializer\Groups({"full"})
+     * @Serializer\Groups({"full", "select"})
      */
     public function getTitle(): string
     {
@@ -55,6 +56,14 @@ class CarBrand implements IdInterface
      * @return Collection|Car[]
      *
      * @Serializer\Groups({"full"})
+     * @OA\Property(
+     *     type="array",
+     *     @OA\Items(
+     *          type="object",
+     *          @OA\Property(property="title", type="string"),
+     *          @OA\Property(property="value", type="integer"),
+     *     )
+     * )
      */
     public function getCars()
     {

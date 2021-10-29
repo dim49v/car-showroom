@@ -8,6 +8,7 @@ use App\Entity\Traits\SelectEntity;
 use App\Interfaces\IdInterface;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use OpenApi\Annotations as OA;
 use Psr\Cache\CacheItemInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation as Serializer;
@@ -245,6 +246,10 @@ class User implements IdInterface, UserInterface
 
     /**
      * @Serializer\Groups({"login"})
+     * @OA\Property(
+     *     type="array",
+     *     @OA\Items( type="string")
+     * )
      */
     public function getRoles(): array
     {

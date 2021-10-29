@@ -6,6 +6,7 @@ use App\Entity\Traits\IdEntity;
 use App\Interfaces\IdInterface;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use OpenApi\Annotations as OA;
 use Gedmo\Timestampable\Timestampable;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Serializer\Annotation as Serializer;
@@ -40,6 +41,11 @@ class Purchase implements IdInterface, Timestampable
 
     /**
      * @Serializer\Groups({"full"})
+     * @OA\Property(
+     *     type="object",
+     *     @OA\Property(property="title", type="string"),
+     *     @OA\Property(property="value", type="integer"),
+     * )
      */
     public function getCustomer(): User
     {
@@ -55,6 +61,11 @@ class Purchase implements IdInterface, Timestampable
 
     /**
      * @Serializer\Groups({"full"})
+     * @OA\Property(
+     *     type="object",
+     *     @OA\Property(property="title", type="string"),
+     *     @OA\Property(property="value", type="integer"),
+     * )
      */
     public function getCar(): Car
     {
@@ -70,6 +81,11 @@ class Purchase implements IdInterface, Timestampable
 
     /**
      * @Serializer\Groups({"full"})
+     * @OA\Property(
+     *     type="object",
+     *     @OA\Property(property="title", type="string"),
+     *     @OA\Property(property="value", type="integer"),
+     * )
      */
     public function getManager(): User
     {
@@ -115,6 +131,11 @@ class Purchase implements IdInterface, Timestampable
 
     /**
      * @Serializer\Groups({"full"})
+     * @OA\Property(
+     *     type="object",
+     *     @OA\Property(property="title", type="string"),
+     *     @OA\Property(property="value", type="integer"),
+     * )
      */
     public function getShowroom(): Showroom
     {

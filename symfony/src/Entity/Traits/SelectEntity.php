@@ -4,6 +4,7 @@ namespace App\Entity\Traits;
 
 use App\Interfaces\IdInterface;
 use RuntimeException;
+use Symfony\Component\Serializer\Annotation as Serializer;
 
 trait SelectEntity
 {
@@ -15,6 +16,9 @@ trait SelectEntity
         ];
     }
 
+    /**
+     * @Serializer\Groups({"select"})
+     */
     public function getTitle(): string
     {
         /** @var object $object */
@@ -29,6 +33,7 @@ trait SelectEntity
 
     /**
      * @return null|int
+     * @Serializer\Groups({"select"})
      */
     public function getValue()
     {

@@ -3,6 +3,7 @@
 namespace App\Entity\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
+use OpenApi\Annotations as OA;
 use Symfony\Component\Serializer\Annotation as Serializer;
 
 trait IdEntity
@@ -18,6 +19,7 @@ trait IdEntity
 
     /**
      * @Serializer\Groups({"full"})
+     * @OA\Property(description="The identifier.")
      */
     public function getId(): ?int
     {
