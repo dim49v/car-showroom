@@ -28,6 +28,8 @@ abstract class BaseController extends AbstractController
     use ExceptionTrait;
     use QueryParamsTrait;
 
+    public const AUTH_USER = "auth_user";
+
     protected Request $request;
     protected string $entityName;
 

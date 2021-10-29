@@ -2,6 +2,7 @@
 
 namespace App\Controller\Traits;
 
+use App\Controller\BaseController;
 use DateTime;
 use Exception;
 use ReflectionClass;
@@ -21,6 +22,7 @@ trait CustomFunctionsTrait
         if (!isset($context['groups'])) {
             $context['groups'] = 'full';
         }
+        $context[BaseController::AUTH_USER] = $this->getUser();
 
         return $this->json(
             $data,

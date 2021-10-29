@@ -2,7 +2,9 @@
 
 namespace App\Normalizer;
 
+use App\Controller\BaseController;
 use App\Entity\Car;
+use App\Entity\Enum\RoleEnum;
 use App\Entity\Showroom;
 use App\Entity\User;
 use Doctrine\Common\Collections\Collection;
@@ -38,6 +40,18 @@ class ShowroomNormalizer extends CustomObjectNormalizer
             )->getValues();
         };
 
-        return parent::normalize($object, $format, $context);
+        $data = parent::normalize($object, $format, $context);
+
+        if (isset($context[BaseController::AUTH_USER])
+            && empty(array_intersect(
+                $context[BaseController::AUTH_USER]->getRoles(),
+                [RoleEnum::ROLE_MANAGER, RoleEnum::ROLE_DIRECTOR]
+            ))
+        ) {
+            unset($data['cars']);
+            unset($data['managers']);
+        }
+
+        return $data;
     }
 }
